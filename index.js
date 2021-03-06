@@ -30,28 +30,14 @@ app.use(morgan('combined'));
 app.use(cors());
 
 
-
-
 app.get('/api/viewNews', async (req, res) => {
-    //hardcoded, later need to be changed to the db
-/*    let newscontent = [{
-        url: "http://static.tvmaze.com/uploads/images/medium_portrait/0/2128.jpg",
-        title: "bbbbb",
-        comments: "cccc"
-    },
-        {
-            url: "http://static.tvmaze.com/uploads/images/medium_portrait/0/2128.jpg",
-            title: "ddd",
-            comments: "eeee"
-        }
-    ];*/
 
     let newscontent = await News.find().sort({ datetime: 'descending' });
 
     res.status(200).contentType("application/json").send(newscontent);
 });
 
-app.post("/api/postNews", uploadStrategy, async (req, res) => {
+app.post("/api/postNews", uploadStrategy,auth, async (req, res) => {
     //need to put the auth later
 
     console.log('it is received here');
@@ -91,7 +77,6 @@ app.post("/api/login", async (req, res) => {
         let user =await User.findByCredentials(username, password);
         console.log(user);
         if (!user) {
-            console.log("error here");
             return res.status(401).contentType("application/json").json({ error: "Login Failed" });
         }
         const token = await user.generateAuthToken();
