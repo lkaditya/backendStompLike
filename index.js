@@ -110,7 +110,7 @@ const getBlobName = originalName => {
 
 
 //require("./model/db.js");
-let DATABASE_URL = process.env.DATABASE_URL || "mongodb://localhost:27017/news";
+let DATABASE_URL = process.env.DATABASE_URL; 
 mongoose.connect(DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

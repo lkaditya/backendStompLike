@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const app = require("../index.js");
 
-let DATABASE_URL = process.env.DATABASE_URL || "mongodb://localhost:27017/news";
+let DATABASE_URL = process.env.DATABASE_URL || "mongodb + srv://user001:mongodbPASSWORD@cluster0assignment.3j5me.mongodb.net/news"
+    //"mongodb://localhost:27017/news";
 
 mongoose.connect(DATABASE_URL, {
     useNewUrlParser: true,
