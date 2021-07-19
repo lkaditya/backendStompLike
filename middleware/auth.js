@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../model/user")
 
+//middleware to process with the authorization for all the functionality after login
 const auth = async (req, res, next) => {
     const token = req.header("Authorization").replace("Bearer", "").trim();
     console.log("Token: ", token);
