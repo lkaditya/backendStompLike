@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require("../model/user");
 
+//process the login post request
 router.post("/api/login", async (req, res) => {
     try {
         console.log(req.body);
