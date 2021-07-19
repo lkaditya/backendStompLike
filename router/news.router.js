@@ -5,6 +5,7 @@ const News = require("../model/news");
 
 require("dotenv").config();
 
+//setup the library to received the uploaded image and store to blob azure
 const multer = require('multer')
     , inMemoryStorage = multer.memoryStorage()
     , uploadStrategy = multer({ storage: inMemoryStorage }).single('image')
@@ -21,6 +22,7 @@ const getBlobName = originalName => {
     return `${identifier}-${originalName}`;
 };
 
+//route to get the news from the database and sort it by date
 router.get('/api/viewNews', async (req, res) => {
 
     let newscontent = await News.find().sort({ datetime: 'descending' });
@@ -28,6 +30,7 @@ router.get('/api/viewNews', async (req, res) => {
     res.status(200).contentType("application/json").send(newscontent);
 });
 
+//route to process post request of a news income (containing text and image)
 router.post("/api/postNews", uploadStrategy, auth, async (req, res) => {
 
     console.log('it is received here');
@@ -50,7 +53,8 @@ router.post("/api/postNews", uploadStrategy, auth, async (req, res) => {
         imageurl: url,
         title: title,
         comments: comments,
-        datetime: new Date()
+        datetime: new Date(),
+        poster: req.body.poster
     });
     //console.log(unit);
     await unit.save();
